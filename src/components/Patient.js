@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View, StyleSheet, Pressable} from 'react-native';
 
-const Patient = ({item, setShowModal, editPatient}) => {
+const Patient = ({item, setShowModal, editPatient, deletePatient}) => {
   const {patient, date, id} = item;
 
   // eslint-disable-next-line no-shadow
@@ -34,7 +34,9 @@ const Patient = ({item, setShowModal, editPatient}) => {
           style={[styles.btn, styles.editBtn]}>
           <Text style={styles.textBtn}>Edit</Text>
         </Pressable>
-        <Pressable style={[styles.btn, styles.deleteBtn]}>
+        <Pressable
+          onLongPress={() => deletePatient(id)}
+          style={[styles.btn, styles.deleteBtn]}>
           <Text style={styles.textBtn}>Delete</Text>
         </Pressable>
       </View>

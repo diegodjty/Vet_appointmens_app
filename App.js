@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Pressable,
   FlatList,
+  Alert,
 } from 'react-native';
 
 import Form from './src/components/Form';
@@ -18,6 +19,25 @@ function App() {
     // eslint-disable-next-line no-shadow
     const patientToEdit = patients.filter(patient => patient.id === id);
     setPatient(patientToEdit[0]);
+  };
+
+  const deletePatient = id => {
+    Alert.alert(
+      'You want to delete this patient?',
+      'this action is irreversible',
+      [
+        {text: 'Cancel'},
+        {
+          text: 'Yes, Delete',
+          onPress: () => {
+            const updatedPatients = patients.filter(
+              patientState => patientState.id !== id,
+            );
+            setPatients(updatedPatients);
+          },
+        },
+      ],
+    );
   };
 
   return (
@@ -43,6 +63,7 @@ function App() {
               item={item}
               setShowModal={setShowModal}
               editPatient={editPatient}
+              deletePatient={deletePatient}
             />
           )}
         />
