@@ -6,14 +6,18 @@ import {
   Pressable,
   FlatList,
   Alert,
+  Modal,
 } from 'react-native';
 
 import Form from './src/components/Form';
 import Patient from './src/components/Patient';
+import PatientInfo from './src/components/PatientInfo';
+
 function App() {
   const [showModal, setShowModal] = useState(false);
   const [patients, setPatients] = useState([]);
   const [patient, setPatient] = useState({});
+  const [patientModal, setPatientModal] = useState(false);
 
   const editPatient = id => {
     // eslint-disable-next-line no-shadow
@@ -62,8 +66,10 @@ function App() {
             <Patient
               item={item}
               setShowModal={setShowModal}
+              setPatient={setPatient}
               editPatient={editPatient}
               deletePatient={deletePatient}
+              setPatientModal={setPatientModal}
             />
           )}
         />
@@ -77,6 +83,14 @@ function App() {
         patient={patient}
         setPatient={setPatient}
       />
+
+      <Modal animationType="fade" visible={patientModal}>
+        <PatientInfo
+          patient={patient}
+          setPatientModal={setPatientModal}
+          setPatient={setPatient}
+        />
+      </Modal>
     </SafeAreaView>
   );
 }

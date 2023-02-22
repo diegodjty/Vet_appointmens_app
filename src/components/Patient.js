@@ -1,46 +1,45 @@
 import React from 'react';
 import {Text, View, StyleSheet, Pressable} from 'react-native';
+import {formatDate} from '../helpers';
 
-const Patient = ({item, setShowModal, editPatient, deletePatient}) => {
+const Patient = ({
+  item,
+  setShowModal,
+  editPatient,
+  deletePatient,
+  setPatientModal,
+  setPatient,
+}) => {
   const {patient, date, id} = item;
 
-  // eslint-disable-next-line no-shadow
-  const formatDate = date => {
-    const newDate = new Date(date);
-    const options = {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    };
-
-    return newDate.toLocaleDateString('en-US', options);
-  };
-
-  console.log(formatDate(date));
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Patient:</Text>
-      <Text style={styles.text}>{patient}</Text>
-      <Text style={styles.date}>{formatDate(date)}</Text>
+    <Pressable
+      onLongPress={() => {
+        setPatientModal(true);
+        setPatient(item);
+      }}>
+      <View style={styles.container}>
+        <Text style={styles.label}>Patient:</Text>
+        <Text style={styles.text}>{patient}</Text>
+        <Text style={styles.date}>{formatDate(date)}</Text>
 
-      <View style={styles.btnContainer}>
-        <Pressable
-          onLongPress={() => {
-            setShowModal(true);
-            editPatient(id);
-          }}
-          style={[styles.btn, styles.editBtn]}>
-          <Text style={styles.textBtn}>Edit</Text>
-        </Pressable>
-        <Pressable
-          onLongPress={() => deletePatient(id)}
-          style={[styles.btn, styles.deleteBtn]}>
-          <Text style={styles.textBtn}>Delete</Text>
-        </Pressable>
+        <View style={styles.btnContainer}>
+          <Pressable
+            onLongPress={() => {
+              setShowModal(true);
+              editPatient(id);
+            }}
+            style={[styles.btn, styles.editBtn]}>
+            <Text style={styles.textBtn}>Edit</Text>
+          </Pressable>
+          <Pressable
+            onLongPress={() => deletePatient(id)}
+            style={[styles.btn, styles.deleteBtn]}>
+            <Text style={styles.textBtn}>Delete</Text>
+          </Pressable>
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
