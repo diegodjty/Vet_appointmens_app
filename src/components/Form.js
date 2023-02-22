@@ -11,20 +11,30 @@ import {
   Alert,
 } from 'react-native';
 import DatePicker from 'react-native-date-picker';
-const Form = ({showModal, setShowModal}) => {
-  const [pacient, setPacient] = useState('');
+const Form = ({showModal, setShowModal, setPatients, patients}) => {
+  const [patient, setPatient] = useState('');
   const [owner, setOwner] = useState('');
   const [email, setEmail] = useState('');
   const [number, setNumber] = useState('');
-  const [symptomes, setSymptomes] = useState('');
+  const [symptoms, setSymptoms] = useState('');
   const [date, setDate] = useState(new Date());
 
   const handlApptm = () => {
-    if ([pacient, owner, email, symptomes, date].includes('')) {
+    if ([patient, owner, email, symptoms, date].includes('')) {
       Alert.alert('Error', 'All fields are required', []);
 
       return;
     }
+
+    const newPatient = {
+      patient,
+      owner,
+      email,
+      symptoms,
+      date,
+    };
+
+    setPatients([...patients, newPatient]);
   };
 
   return (
@@ -45,8 +55,8 @@ const Form = ({showModal, setShowModal}) => {
               style={styles.input}
               placeholder="Pacient Name"
               placeholderTextColor={'#666'}
-              value={pacient}
-              onChangeText={setPacient}
+              value={patient}
+              onChangeText={setPatient}
             />
           </View>
 
@@ -103,8 +113,8 @@ const Form = ({showModal, setShowModal}) => {
               style={[styles.input, styles.symptomsInput]}
               placeholder="Symptoms"
               placeholderTextColor={'#666'}
-              value={symptomes}
-              onChangeText={setSymptomes}
+              value={symptoms}
+              onChangeText={setSymptoms}
               multiline={true}
               numberOfLines={4}
             />

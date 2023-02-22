@@ -4,6 +4,8 @@ import {Text, SafeAreaView, StyleSheet, Pressable} from 'react-native';
 import Form from './src/components/Form';
 function App() {
   const [showModal, setShowModal] = useState(false);
+  const [patients, setPatients] = useState([]);
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>
@@ -14,7 +16,12 @@ function App() {
       <Pressable style={styles.newApptBtn} onPress={() => setShowModal(true)}>
         <Text style={styles.apmtTextBtn}>New Appointment</Text>
       </Pressable>
-      <Form showModal={showModal} setShowModal={setShowModal} />
+      <Form
+        showModal={showModal}
+        setShowModal={setShowModal}
+        patients={patients}
+        setPatients={setPatients}
+      />
     </SafeAreaView>
   );
 }
