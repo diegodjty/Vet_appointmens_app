@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, Pressable} from 'react-native';
 
 const Patient = ({item}) => {
   const {patient, date} = item;
@@ -24,6 +24,15 @@ const Patient = ({item}) => {
       <Text style={styles.label}>Patient:</Text>
       <Text style={styles.text}>{patient}</Text>
       <Text style={styles.date}>{formatDate(date)}</Text>
+
+      <View style={styles.btnContainer}>
+        <Pressable style={[styles.btn, styles.editBtn]}>
+          <Text style={styles.textBtn}>Edit</Text>
+        </Pressable>
+        <Pressable style={[styles.btn, styles.deleteBtn]}>
+          <Text style={styles.textBtn}>Delete</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -48,6 +57,28 @@ const styles = StyleSheet.create({
   },
   date: {
     color: '#374151',
+  },
+  btnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  btn: {
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    borderRadius: 5,
+  },
+  deleteBtn: {
+    backgroundColor: '#EF4444',
+  },
+  editBtn: {
+    backgroundColor: '#F59E0B',
+  },
+  textBtn: {
+    textTransform: 'uppercase',
+    fontWeight: '700',
+    fontSize: 12,
+    color: '#FFF',
   },
 });
 
