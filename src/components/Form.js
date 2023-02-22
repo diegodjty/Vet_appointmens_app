@@ -8,6 +8,7 @@ import {
   View,
   ScrollView,
   Pressable,
+  Alert,
 } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 const Form = ({showModal, setShowModal}) => {
@@ -17,6 +18,14 @@ const Form = ({showModal, setShowModal}) => {
   const [number, setNumber] = useState('');
   const [symptomes, setSymptomes] = useState('');
   const [date, setDate] = useState(new Date());
+
+  const handlApptm = () => {
+    if ([pacient, owner, email, symptomes, date].includes('')) {
+      Alert.alert('Error', 'All fields are required', []);
+
+      return;
+    }
+  };
 
   return (
     <Modal animationType="slide" visible={showModal}>
@@ -101,7 +110,7 @@ const Form = ({showModal, setShowModal}) => {
             />
           </View>
 
-          <Pressable style={styles.newApptmBtn}>
+          <Pressable onPress={handlApptm} style={styles.newApptmBtn}>
             <Text style={styles.newApptmTxt}>Add Patient</Text>
           </Pressable>
         </ScrollView>
