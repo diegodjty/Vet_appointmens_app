@@ -20,11 +20,35 @@ const Patient = ({item}) => {
   console.log(formatDate(date));
 
   return (
-    <View>
-      <Text>{patient}</Text>
-      <Text>{formatDate(date)}</Text>
+    <View style={styles.container}>
+      <Text style={styles.label}>Patient:</Text>
+      <Text style={styles.text}>{patient}</Text>
+      <Text style={styles.date}>{formatDate(date)}</Text>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#FFF',
+    padding: 20,
+    borderBottomColor: '#94A3B8',
+    borderBottomWidth: 1,
+  },
+  label: {
+    textTransform: 'uppercase',
+    fontWeight: '700',
+    marginBottom: 10,
+  },
+  text: {
+    color: '#6D28D9',
+    fontSize: 24,
+    fontWeight: '700',
+    marginBottom: 10,
+  },
+  date: {
+    color: '#374151',
+  },
+});
 
 export default Patient;
