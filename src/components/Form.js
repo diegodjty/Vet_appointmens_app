@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Modal,
   Text,
@@ -11,13 +11,33 @@ import {
   Alert,
 } from 'react-native';
 import DatePicker from 'react-native-date-picker';
-const Form = ({showModal, setShowModal, setPatients, patients}) => {
+const Form = ({
+  showModal,
+  setShowModal,
+  setPatients,
+  patients,
+  patient: patientObj,
+  setPatient: setPatientApp,
+}) => {
   const [patient, setPatient] = useState('');
+  const [id, setID] = useState('');
   const [owner, setOwner] = useState('');
   const [email, setEmail] = useState('');
   const [number, setNumber] = useState('');
   const [symptoms, setSymptoms] = useState('');
   const [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    if (Object.keys(patientObj).length > 0) {
+      setPatient(patientObj.patient);
+      setID(patientObj.id);
+      setOwner(patientObj.owner);
+      setEmail(patientObj.email);
+      setNumber(patientObj.number);
+      setSymptoms(patientObj.symptoms);
+      setDate(patientObj.date);
+    }
+  }, [patientObj]);
 
   const handlApptm = () => {
     if ([patient, owner, email, symptoms, date].includes('')) {
@@ -34,8 +54,22 @@ const Form = ({showModal, setShowModal, setPatients, patients}) => {
       symptoms,
       date,
     };
+    // Check if as a new patient or to edit one
+    if (id) {
+      // Edit
+      newPatient.id = id;
 
-    setPatients([...patients, newPatient]);
+      const updatedPatients = patients.map(patientState =>
+        patientState.id === newPatient.id ? newPatient : patientState,
+      );
+      setPatient(updatedPatients);
+      setPatientApp({});
+    } else {
+      // New
+      newPatient.id = Date.now();
+      setPatients([...patients, newPatient]);
+    }
+
     setShowModal(!showModal);
 
     setPatient('');
@@ -51,10 +85,20 @@ const Form = ({showModal, setShowModal, setPatients, patients}) => {
       <SafeAreaView style={styles.container}>
         <ScrollView>
           <Text style={styles.title}>
-            New <Text style={styles.boldTitle}>Appointment</Text>
+            {patientObj.id ? 'Edit' : 'New'}
+            <Text style={styles.boldTitle}>Appointment</Text>
           </Text>
           <Pressable
-            onLongPress={() => setShowModal(false)}
+            onLongPress={() => {
+              setShowModal(false);
+              setPatientApp({});
+              setPatient('');
+              setOwner('');
+              setEmail('');
+              setNumber('');
+              setSymptoms('');
+              setDate(new Date());
+            }}
             style={styles.cancelBtn}>
             <Text style={styles.cancelTxt}>X Cancel</Text>
           </Pressable>
@@ -131,7 +175,9 @@ const Form = ({showModal, setShowModal, setPatients, patients}) => {
           </View>
 
           <Pressable onPress={handlApptm} style={styles.newApptmBtn}>
-            <Text style={styles.newApptmTxt}>Add Patient</Text>
+            <Text style={styles.newApptmTxt}>
+              {patientObj.id ? 'Edit' : 'Add'} Patient
+            </Text>
           </Pressable>
         </ScrollView>
       </SafeAreaView>

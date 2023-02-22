@@ -15,6 +15,7 @@ function App() {
   const [patient, setPatient] = useState({});
 
   const editPatient = id => {
+    // eslint-disable-next-line no-shadow
     const patientToEdit = patients.filter(patient => patient.id === id);
     setPatient(patientToEdit[0]);
   };
@@ -52,6 +53,8 @@ function App() {
         setShowModal={setShowModal}
         patients={patients}
         setPatients={setPatients}
+        patient={patient}
+        setPatient={setPatient}
       />
     </SafeAreaView>
   );
