@@ -12,6 +12,12 @@ import Patient from './src/components/Patient';
 function App() {
   const [showModal, setShowModal] = useState(false);
   const [patients, setPatients] = useState([]);
+  const [patient, setPatient] = useState({});
+
+  const editPatient = id => {
+    const patientToEdit = patients.filter(patient => patient.id === id);
+    setPatient(patientToEdit[0]);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -31,7 +37,13 @@ function App() {
           style={styles.list}
           data={patients}
           keyExtractor={item => item.id}
-          renderItem={({item}) => <Patient item={item} />}
+          renderItem={({item}) => (
+            <Patient
+              item={item}
+              setShowModal={setShowModal}
+              editPatient={editPatient}
+            />
+          )}
         />
       )}
 
