@@ -35,6 +35,14 @@ const Form = ({showModal, setShowModal, setPatients, patients}) => {
     };
 
     setPatients([...patients, newPatient]);
+    setShowModal(!showModal);
+
+    setPatient('');
+    setOwner('');
+    setEmail('');
+    setNumber('');
+    setSymptoms('');
+    setDate(new Date());
   };
 
   return (
@@ -102,6 +110,7 @@ const Form = ({showModal, setShowModal, setPatients, patients}) => {
               <DatePicker
                 date={date}
                 mode="date"
+                // eslint-disable-next-line no-shadow
                 onDateChange={date => setDate(date)}
               />
             </View>
