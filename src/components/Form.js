@@ -27,6 +27,7 @@ const Form = ({showModal, setShowModal, setPatients, patients}) => {
     }
 
     const newPatient = {
+      id: Date.now(),
       patient,
       owner,
       email,
