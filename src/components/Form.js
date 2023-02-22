@@ -13,11 +13,11 @@ import {
 import DatePicker from 'react-native-date-picker';
 const Form = ({
   showModal,
-  setShowModal,
   setPatients,
   patients,
   patient: patientObj,
   setPatient: setPatientApp,
+  closeModal,
 }) => {
   const [patient, setPatient] = useState('');
   const [id, setID] = useState('');
@@ -70,7 +70,7 @@ const Form = ({
       setPatients([...patients, newPatient]);
     }
 
-    setShowModal(!showModal);
+    closeModal();
 
     setPatient('');
     setOwner('');
@@ -90,7 +90,7 @@ const Form = ({
           </Text>
           <Pressable
             onLongPress={() => {
-              setShowModal(false);
+              closeModal();
               setPatientApp({});
               setPatient('');
               setOwner('');

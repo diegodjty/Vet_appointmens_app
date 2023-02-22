@@ -44,6 +44,9 @@ function App() {
     );
   };
 
+  const closeModal = () => {
+    setShowModal(false);
+  };
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>
@@ -74,15 +77,15 @@ function App() {
           )}
         />
       )}
-
-      <Form
-        showModal={showModal}
-        setShowModal={setShowModal}
-        patients={patients}
-        setPatients={setPatients}
-        patient={patient}
-        setPatient={setPatient}
-      />
+      {showModal && (
+        <Form
+          closeModal={closeModal}
+          patients={patients}
+          setPatients={setPatients}
+          patient={patient}
+          setPatient={setPatient}
+        />
+      )}
 
       <Modal animationType="fade" visible={patientModal}>
         <PatientInfo
